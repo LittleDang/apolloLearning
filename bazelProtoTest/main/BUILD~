@@ -1,0 +1,13 @@
+proto_library(
+	name="test",
+	srcs=[
+	"test.proto",
+	],
+)
+
+cc_binary(
+	name="main",
+	srcs=["main.cc"],
+	deps=[":test"],
+
+)

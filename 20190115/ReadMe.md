@@ -26,5 +26,5 @@ sudo docker run -itd ubuntu:14.04 /bin/bash
 * 更新状态.git `git add .`
 * 查看状态`git status`
 * 克隆仓库 `git clone`
-* 修改 `commit -m ""`
+* 修改 `git commit -m ""`
 * 上传`git push origin master`

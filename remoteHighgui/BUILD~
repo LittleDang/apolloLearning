@@ -9,8 +9,11 @@ cc_library(
 cc_binary(
 	name="remoteControl_gui",
 	srcs=["src/main.cpp"],
-	linkopts = ["-lopencv_core -lopencv_imgproc -lopencv_highgui"],
-	deps=[":remote"],
+	deps=[":remote",
+	"@opencv2//:highgui",
+	"@opencv2//:imgproc",
+	"@opencv2//:core",
+	"@opencv2//:video"],
 )
 
 cpplint()

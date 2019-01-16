@@ -1,0 +1,11 @@
+cc_library(
+    name = "remote",
+    srcs = ["remote.cpp"],
+    hdrs = ["remote.h"],
+)
+cc_binary(
+	name="main",
+	srcs=["main.cc"],
+	deps=[":remote",
+	"@opencv//:opencv"],
+)

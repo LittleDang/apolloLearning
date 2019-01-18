@@ -1,4 +1,4 @@
-### 20190117
+### 20190117/20190118更新
 一开始有个小插曲，弄了我一小时，如何给vscode配置clang—format插件，捣鼓了很多一点用都没有，最后直接安装了个c/c++ 插件，和命令行直接install clang-format后，把保存自动调用格式就好了，不用设置clang-format的路径，也不需要额外安装插件，直接就可以跑了，加上反而跑不了，很草蛋。
 
 **今天主要学习如何在apollo里面发送proto**
@@ -12,8 +12,17 @@
 ```
 rostopic echo /topicname
 ```
-起始在apollo自带的docker里面好像有发送protobuf的例子，这个是在搜索资料的时候无意间发现的[传送门](http://blog.sina.com.cn/s/blog_a45145650102xjym.html)不过名字好像有改变，多按几次tab就可以找到了，但是这是个编译过的二进制文件，而不是源码，我翻遍了整个镜像，也只找到了py文件，可惜不是我要的，但是我成功的用rostopic echo观察到了话题，这是个好的开始。
+***
+起始在apollo自带的docker里面好像有发送protobuf的例子，这个是在搜索资料的时候无意间发现的[传送门](http://blog.sina.com.cn/s/blog_a45145650102xjym.html)不过名字好像有改变，多按几次tab就可以找到了，
+```bash
+rosrun pb_msgs_example pb_talker #在docker里面,可以发送
+rosrun pb_msgs_example pb_listener #可以接收
+rostopic echo /pb_chatter #可以接收
+```
+包所在目录`/home/tmp/ros/share/pb_msgs_example`
 
+但是这是个编译过的二进制文件，而不是源码，我翻遍了整个镜像，也只找到了py文件，可惜不是我要的，但是我成功的用rostopic echo观察到了话题，这是个好的开始。
+***
 第三个问题基本解决了，剩下两个问题，我直接在apollo里面复制了一个routingtest的cc文件，直接丢到一个新的文件夹里，配置好build文件，直接就可以发送proto信息，不过很多东西没搞懂，基本上照着这个改可以实现发送信息，但是我楞是没明白话题名哪里定义的，也没明白话题类型怎么生成的，怎么添加自己自定义的信息等
 
 所以第二个问题解决了一部分，之后继续在网上搜索了很久，发现了一个比较牛逼的博主，虽然文章阅读不高，但是都是干货，传送门[一个叫做zuo的博主](https://blog.csdn.net/u012423865/article/category/7576006)，跟着文章改了半天，硬是没有实现，编译一直报错。最后顺便发现了一个问题，猜测**添加一个新的proto只能够在已有的模块下面添加**，最后直接复制了博主的东西进去，好像没有报错了，编译了几分钟都每报错，全部编译完要比较久，于是直接放弃，毕竟我自己写的时候编译一分钟查不多就报错了，而且总是同一个错误，之后完全模仿apollo定义的方式去定义，最后编译好像没有出错，即**那些文件该改的全部按照博主的内容去改，只是把最后一句代码**
@@ -21,5 +30,14 @@ rostopic echo /topicname
 using ZuoTestAdapter = Adapter<sensor_msgs::Image>;
 ```
 **改成了我自己编写的proto**然后直接编译，知道我下班也没有编译完，所以不知道效果对不对，明天测试无误后再来添加。
-
+***
 ### 20190118
+编译没有报错，一切正常，也可以发送，但是没有测试能不能用rostopic接收，毕竟编译一次很久，直接添加自己的protobuf，然后照着文件改
+```
+/path/to/apollo/modules/routing/tools/routing_tester.cc
+```
+并没有出错，也可以运行，但是用rostopic接收不到信息，并且报错
+
+最后说一句
+
+# 我心态炸裂了

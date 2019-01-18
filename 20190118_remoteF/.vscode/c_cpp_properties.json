@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/dang/catkin_ws/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/dang/catkin_ws/src/Skid_Steer_Drive/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/combined_robot_hw/include",
+                "/home/dang/catkin_ws/src/beginner_tutorials/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/combined_robot_hw_tests/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/controller_interface/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/controller_manager/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/controller_manager_tests/include",
+                "/home/dang/catkin_ws/src/firefly/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/hardware_interface/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/joint_limits_interface/include",
+                "/home/dang/catkin_ws/src/learning_tf/include",
+                "/home/dang/catkin_ws/src/myPathPlanner/include",
+                "/home/dang/catkin_ws/src/picTest/include",
+                "/home/dang/catkin_ws/src/pic_test/include",
+                "/home/dang/catkin_ws/src/showpath/include",
+                "/home/dang/catkin_ws/src/ros_control-kinetic-devel/transmission_interface/include",
+                "/usr/include"
+            ],
+            "name": "Linux"
+        }
+    ],
+    "version": 4
+}

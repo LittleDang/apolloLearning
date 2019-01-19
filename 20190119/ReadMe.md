@@ -19,3 +19,29 @@ bash apollo.sh build_cpu
 
 之后执行编译，发现三个消息全部可以接收得到。
 综上，应该是之前在root模式下执行过编译，导致py_proto文件夹的权限比较高，而apollo.sh build的时候没有权限去修改这个文件夹，而这个文件夹的东西又可能跟ros关系很大。
+
+### 一次作死的经历
+猜测，我可以用rostopic查看信息，那么讲道理也可以用rqt查看信息才对，于是机智的我安装了个rqt结果运行的时候找不到master，我才想起apollo根本就没有master，然后我重点是我还commit了。commit完后想起来我rostopic看一下吧，结果发现rostopic坏掉了，很难受。
+我运行了
+```bash
+sudo apt-get autoremove ros-indigo-rqt-graph
+```
+删除了一下，发现还是不行。那我就换个镜像吧，于是我就用了另一个镜像（原本用的的local_dev，这次用原本的）
+```bash
+bash docker/scripts/dev_start.sh #没有-l
+```
+进去里面一切都是新，然而rostopic并不能运行，于是我觉得我镜像没有删除干净，于是果断把所有镜像删除，然后重新下载镜像。
+重新进去还是gg的。
+直接运行
+```bash
+bash apollo.sh clean
+bash apollo.sh build_cpu #依然不行
+```
+同时我发现
+```bash
+bash scripts/diagnostics.sh #也是gg了
+```
+我意识到整个问题有点严重。
+
+最后重新git clone了整个源,删除所有镜像，就像第一次安装apollo一样干净，仿佛一切都没有发生过，天空依旧那么蓝。
+重新编译，解决，rostopic正常了，diagnostics.sh也正常了。

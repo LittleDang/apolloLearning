@@ -47,14 +47,6 @@ the rosdep view is empty: call 'sudo rosdep init' and 'rosdep update'
 ERROR: Cannot load message class for [pb_msgs/RemoteMessage]. Are your messages built?
 
 ```
-### 20190119
-将自己的数据类型（一个自己定义的protobuf)改为apollo自带的类型，一切正常，也可以用rostopic接收了。
-综上猜测
-** 原本自己的protobuf应该也是发送成功了，但是没有在ros里面改对应的东西，导致rostopic找不到 **
-同时发现，apollo里面也是有用ros的数据类型的，同时也是有cmakelist的，猜测有一部分还是用catkin_make编译的
-综上猜测
-** 应该是也可在apollo里面使用ros的数据结构的，只要在外面编译好，然后带进apollo，修改对应的文件（具体修改什么文件还不清楚），应该是一样可以实现通讯的，并且也可以rostopic查看的**
-
 最后说一句
 
 # 我心态炸裂了

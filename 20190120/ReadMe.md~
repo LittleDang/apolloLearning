@@ -1,0 +1,45 @@
+### 20190120
+今天的任务分为两部分
+1. 将之前的remoteControl_gui移植到apollo里面，并且成功的实现了使用自己的protobuf发送信息。
+2. 根据我今天的仔细观察，发现`/modules/common/adapters/adapter_gflags.cc`里面的一堆的一堆DEFINE_string都是来自于谷歌的一个头文件`#include "gflags/gflags.h"`。介绍一下DEFINE_string的作用，基本上就是创建一个全局可以见的全局变量，并且可以通过命令行修改其值。
+具体可以看[一篇博客](https://blog.csdn.net/jcjc918/article/details/50876613).
+
+***
+除此之外，发现每个模块基本都对应着一个main.cc，里面都只有一句话，APOLLO_MAIN（APPNAME），eg.
+```c
+APOLLO_MAIN(apollo::routing::Routing);
+```
+而APPNAME其实是在对应模块里面定义的一个类，而且这个类都是继承自apollo::common::ApolloApp
+跟进APOLLO_MAIN这个宏，其实根每个模块有关的只有三句话
+```c
+    APP apollo_app_;                                           \
+    ros::init(argc, argv, apollo_app_.Name());                 \
+    apollo_app_.Spin();  
+```
+第一句话默认调用构造函数，第二句话是ros节点的初始化，第三句话是一个基类自带的一个函数，跟进函数可以发现，其实只需要重写的虚函数有五个
+```
+ /**
+   * @brief module name
+   */
+  std::string Name() const override;
+
+  /**
+   * @brief module initialization function
+   * @return initialization status
+   */
+  apollo::common::Status Init() override;
+
+  /**
+   * @brief module start function
+   * @return start status
+   */
+  apollo::common::Status Start() override;
+
+  /**
+   * @brief module stop function
+   */
+  void Stop() override;
+```
+以及加上对应的构造函数和析构函数，应该就可以实现一个新的模块。
+
+以上都是猜想，剩下的就留之后做测试。
